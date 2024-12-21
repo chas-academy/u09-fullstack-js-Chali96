@@ -2,16 +2,16 @@ import mongoose from "mongoose";
 
 const bookschema = new mongoose.Schema({
     name:{
-        type:String,
+        type: String,
         required:true,
     },
     author:{
-        type:String,
+        type: String,
         required:true,
         
     },
     imageUrl:{
-        type:String,
+        type: String,
         required:true,
        
     },

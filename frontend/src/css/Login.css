@@ -1,0 +1,127 @@
+
+
+.login_page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: linear-gradient(to bottom right, #34163a, #ff1b54);
+}
+
+.login-title {
+  color: #34163a !important;
+  font-weight: bolder !important;
+  font-size: xx-large;
+}
+.stu-title
+{
+  color: #34163a !important;
+  font-weight: bolder !important;
+  font-size: xx-large;
+}
+
+.login-container {
+  background-image: linear-gradient(#ffad32, #d1cbcb, #ffffff);
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: #ff0048 0px 20px 30px -10px;
+  width: 400px;
+}
+
+.login-container h2 {
+  text-align: center;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #000000;
+}
+
+.form-group input[type='text'],
+.form-group input[type='password'],
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.btn-login {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #34163a;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-login:hover {
+  background-color: #ffad33;
+}
+
+.student-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: linear-gradient(to bottom right, #34163a, #ff1b54);
+}
+
+.student-form {
+  background-image: linear-gradient(#ffad32, #d1cbcb, #ffffff);
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: #ff0048 0px 20px 30px -10px;
+  width: 400px;
+}
+
+.student-form h2 {
+  text-align: center;
+  color: #333;
+}
+
+.student-form .form-group {
+  margin-bottom: 20px;
+}
+
+.student-form .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #000000;
+}
+
+.student-form .form-group input[type='text'],
+.student-form .form-group input[type='password'],
+.student-form .form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.student-form button[type='submit'] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #34163a;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.student-form button[type='submit']:hover {
+  background-color: #ffad33;
+}

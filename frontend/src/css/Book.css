@@ -1,0 +1,108 @@
+/* BookCard.css */
+
+.book-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Skapar 3 kolumner med lika bredd */
+    gap: 20px; /* Avstånd mellan böckerna */
+    justify-content: center;
+    margin-top: 30px;
+}
+
+    .books_page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background-image: linear-gradient(to bottom right, #34163a, #ff006f);
+      }
+.book-card {
+    border-radius: 8px;
+    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    background-image: linear-gradient(to bottom right, #ffad32, #ebfeff);
+    background-color: #fff;
+    padding: 20px;
+    margin: 10px;
+    width: 200px;
+    transition: transform 0.2s ease-in-out;
+    
+    
+}
+
+.book-card:hover {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+}
+
+.book-card .book-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+.book-card .book-details {
+    padding: 10px 0;
+}
+
+.book-card .book-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.book-card .book-author {
+    font-size: 14px;
+    color: #666;
+}
+
+.book-card .book-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+
+.edit-btn{
+    background-color: #005892;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+
+}
+.edit-btn:hover{
+    background-color: #00eaff;
+    cursor: pointer;
+}
+.editlink-btn{
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
+.delete-btn{
+    background-color: #ffaa00;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    
+}
+.delete-btn:hover{
+    background-color: #ff0000;
+    cursor: pointer;
+}
+.deletelink-btn{
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
