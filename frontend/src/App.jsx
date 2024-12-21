@@ -2,6 +2,7 @@ import {BrowserRouter,Routes,Route}from 'react-router-dom'
 import Home from './components/Home'
 import Navbar from './components/Navbar'
 import Books from './components/Books'
+import Footer from './components/Footer'
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
 import AddStudent from './components/AddStudent'
@@ -48,6 +49,8 @@ function App() {
       <Route path='/logout' element={<Logout setRole={setRole}/>}/>
     
     </Routes>
+
+    <Footer  role={role}/>
     </BrowserRouter>
    
   )

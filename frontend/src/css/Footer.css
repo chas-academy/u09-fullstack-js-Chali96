@@ -1,0 +1,36 @@
+.footer {
+    background-color: #000000; /* Mörk lila */
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 2px solid #ac5509;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .footer p {
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  .footer-links {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .footer-link {
+    color: #ffad32; /* Guld */
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-link:hover {
+    color: #ebfeff; /* Ljusare färg */
+  }
+  
