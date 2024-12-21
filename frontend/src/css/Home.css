@@ -1,76 +1,157 @@
-*{
-    cursor: url("Images/cursor img.png"),auto;
-}                 
-.hero {
+/* Home.css */
 
+/* General Reset */
+* {
+    cursor: url("Images/cursor img.png"), auto;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Hero Section */
+  .hero {
     display: flex;
-    background-image: linear-gradient(to bottom right,#000000,#2d2a25,#995525,#44250d);
-    /* background-color: rgb(53, 66, 50); */
-    /* background-image: linear-gradient(); */
-    
+    background-image: linear-gradient(to bottom right, #000000, #2d2a25, #995525, #44250d);
     color: #ffffff;
-    
     height: 92vh;
-    
     padding-inline: 30px;
-    
-    }
-    
-    
-    .hero-content {
-    
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .hero-content {
     flex: 1;
-    
     display: flex;
-    
     flex-direction: column;
-    
     justify-content: center;
-    
     padding: 20px;
-    
-    }
-    .hero-text {
-    
+    z-index: 2;
+  }
+  
+  .hero-text {
     font-size: 3rem;
-    font-family:'Times New Roman', Times, serif;
-    
+    font-family: 'Times New Roman', Times, serif;
     margin-bottom: 10px;
-    
-    
-    }
-    
-    .hero-description {
-    
+  }
+  
+  .hero-description {
     font-size: 1.2rem;
     font-family: serif;
-    
     max-width: 400px;
-    
     margin-bottom: 20px;
-    
-    }
-    
-   
-     .hero-image {
-        flex: 1;
-        background: url('Images/home page.png') center;
-        position: relative;
-        overflow: hidden;
-        background-size: 90%;
-        background-repeat: no-repeat;
-        filter: brightness(80%);
-        
-    }
-    
-    .hero-image:hover {
-       
-        filter: brightness(105%);
-        
-        opacity: 0.9; 
-    }
-    
-    
-   
-
-    
+  }
+  
+  .hero-button {
+    background-color: #ffad32;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    font-weight: bold;
+    z-index: 2;
+  }
+  
+  .hero-button:hover {
+    transform: scale(1.1);
+    background-color: #ffa500;
+  }
+  
+  .hero-image {
+    flex: 1;
+    background: url('Images/home page.png') center;
+    background-size: 90%;
+    background-repeat: no-repeat;
+    filter: brightness(80%);
+    position: relative;
+    transition: transform 0.5s ease, filter 0.5s ease;
+    z-index: 2;
+  }
+  
+  .hero-image:hover {
+    filter: brightness(105%);
+    transform: scale(1.05);
+  }
+  
+  /* Section: Reading Benefits */
+  .reading-benefits {
+    background-color: #f5f5f5;
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .reading-benefits h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .reading-benefits p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .benefits-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .benefits-list li {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* Section: Featured Authors */
+  .featured-authors {
+    background-color: #fff;
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .featured-authors h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .author-list {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .author-card {
+    background-color: #fffbf0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 200px;
+  }
+  
+  .author-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Section: Inspirational Quote */
+  .inspirational-quote {
+    background-color: #2d2a25;
+    color: #fff;
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .inspirational-quote blockquote {
+    font-size: 1.5rem;
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  
+  .inspirational-quote cite {
+    font-size: 1rem;
+    color: #ffad32;
+  }
+  

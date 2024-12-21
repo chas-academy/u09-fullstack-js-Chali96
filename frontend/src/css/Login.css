@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: linear-gradient(to bottom right, #34163a, #ff1b54);
+  background-image: linear-gradient(to bottom right, #000000, #2d2a25, #995525, #44250d);
 }
 
 .login-title {
@@ -21,10 +21,10 @@
 }
 
 .login-container {
-  background-image: linear-gradient(#ffad32, #d1cbcb, #ffffff);
+background-color: #ffffff;
   padding: 40px;
   border-radius: 8px;
-  box-shadow: #ff0048 0px 20px 30px -10px;
+  box-shadow: #000000 0px 20px 30px -10px;
   width: 400px;
 }
 
@@ -58,7 +58,7 @@
   padding: 10px;
   border: none;
   border-radius: 4px;
-  background-color: #34163a;
+  background-color: #000000;
   color: #fff;
   font-size: 16px;
   cursor: pointer;

@@ -13,8 +13,8 @@
         justify-content: center;
         align-items: center;
 
-        background-image: linear-gradient(to bottom right, #34163a, #ff006f);
-      }
+        background-image: linear-gradient(to bottom right, #000000, #2d2a25, #995525, #44250d);
+    }
 .book-card {
     border-radius: 8px;
     box-shadow: 0 5px 7px rgba(0, 0, 0, 0.1);
