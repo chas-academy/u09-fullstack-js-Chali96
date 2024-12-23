@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Books from './components/Books'
 import Footer from './components/Footer'
 import Login from './components/Login'
+import Register from './components/Register'
 import Dashboard from './components/Dashboard'
 import AddStudent from './components/AddStudent'
 import { useState,useEffect } from 'react'
@@ -41,6 +42,7 @@ function App() {
       <Route path='/' element={<Home setRole={setRole}/>}/>
       <Route path='/books' element={<Books role={role}/>}/>
       <Route path='/login' element={<Login setRoleVar={setRole}/>}/>
+      <Route path='/register' element={<Register/>}/>
       <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='/addstudent' element={<AddStudent/>}/>
       <Route path='/addbook' element={<AddBook/>}/>
