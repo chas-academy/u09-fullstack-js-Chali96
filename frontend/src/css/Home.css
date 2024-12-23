@@ -72,7 +72,7 @@
   
   .hero-image:hover {
     filter: brightness(105%);
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
   }
   
   /* Section: Reading Benefits */
