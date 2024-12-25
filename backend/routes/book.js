@@ -1,74 +1,68 @@
-import express from 'express'
-import {Book} from '../models/Book.js'
-const router = express.Router()
-import { verifyAdmin } from './auth.js'
+import express from 'express';
+import { Book } from '../models/Book.js';
+import { verifyUser } from '../middleware/verifyUser.js'; // Importera autentisering-middleware
 
-// verifyAdmin ska vara i router.post /add
 
-router.post('/add', async(req,res)=>{
-    try{
-        const{name,author,imageUrl}=req.body;
-    
-            const newbook = new Book({name,author,imageUrl})
-        
-                await newbook.save()
-                return res.json({added:true})
+const router = express.Router();
 
-    }
-    catch(err){
-        return res.json({message:"error in adding book"})
-    }
-})
-router.get("/books", async (req, res) => {
-    try {
-        const books = await Book.find();
-        return res.json(books);
-    } catch (err) {
-        return res.status(500).json({ message: "Error fetching books", error: err });
-    }
+// Skapa en bok (alla användare)
+router.post('/add', verifyUser, async (req, res) => {
+  try {
+    const { name, author, imageUrl } = req.body;
+
+    const newBook = new Book({ name, author, imageUrl });
+
+    await newBook.save();
+    return res.json({ added: true, book: newBook });
+  } catch (err) {
+    console.error(err);
+    return res.json({ message: 'Error adding book' });
+  }
 });
 
-router.get('/edit/:id',async(req,res)=>{
-    try{
-               const id=req.params.id;
-               const book = await Book.findById({_id: id})
-                return res.json(book)
-    }
-    catch(err){
-        return res.json(err)
-
-    }
-})
-
-router.put('/edit/:id', async (req, res) => {
-    try {
-        const id = req.params.id;  // Hämta id från URL
-        const updateData = req.body; // Hämta den nya data från body
-
-        // Försök att hitta och uppdatera boken
-        const updatedBook = await Book.findByIdAndUpdate(id, updateData, { new: true });
-
-        if (!updatedBook) {
-            return res.status(404).json({ message: "Book not found" });  // Om boken inte finns
-        }
-
-        // Skicka tillbaka den uppdaterade boken
-        return res.json({ updated: true, book: updatedBook });
-    } catch (err) {
-        // Om något går fel, skicka tillbaka ett felmeddelande
-        return res.status(500).json({ message: "Error updating book", error: err });
-    }
+// Hämta alla böcker (alla användare)
+router.get('/books', async (req, res) => {
+  try {
+    const books = await Book.find();
+    return res.json(books);
+  } catch (err) {
+    console.error(err);
+    return res.json({ message: 'Error fetching books' });
+  }
 });
 
-router.delete('/delete/:id',async(req,res)=>{
-    try{
-               const id=req.params.id;
-               const book = await Book.findByIdAndDelete({_id: id})
-                return res.json({deleted:true,book})
-    }
-    catch(err){
-        return res.json(err)
+// Uppdatera bok (alla användare)
+router.put('/edit/:id', verifyUser, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedBook = await Book.findByIdAndUpdate(id, req.body, { new: true });
+    return res.json({ updated: true, book: updatedBook });
+  } catch (err) {
+    console.error(err);
+    return res.json({ message: 'Error updating book' });
+  }
+});
 
+// Ta bort bok från användarens läslista (endast inloggade användare)
+router.delete('/remove-from-list/:bookId', verifyUser, async (req, res) => {
+    try {
+      const { bookId } = req.params;
+      const userId = req.user.id;  // Hämta användarens id från autentisering (req.user sätts i verifyUser)
+  
+      const userBooks = await UserBooks.findOne({ userId });
+  
+      if (userBooks) {
+        // Ta bort boken från användarens lista
+        userBooks.books = userBooks.books.filter(book => book.toString() !== bookId);
+        await userBooks.save();
+        return res.json({ removed: true });
+      } else {
+        return res.json({ message: 'No books found for this user' });
+      }
+    } catch (err) {
+      console.error(err);
+      return res.json({ message: 'Error removing book from list' });
     }
-})
-export {router as bookRouter}
+  });
+
+export { router as bookRouter, verifyUser };

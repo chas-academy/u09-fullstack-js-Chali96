@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 const Logout = ({setRole}) => {
     const navigate = useNavigate()
   useEffect(()=>{
-    axios.get('http://localhost:3000/auth/logout')
+    axios.get('http://localhost:4001/auth/logout')
     .then(res=>{
         if(res.data.logout){
             setRole('')

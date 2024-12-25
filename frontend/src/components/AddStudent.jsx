@@ -22,7 +22,7 @@ const AddStudent = () => {
         grade,
         password,
     };
-axios.post('http://localhost:3000/student/register',data)
+axios.post('http://localhost:4001/student/register',data)
 .then((res) => {
   console.log(res)
   

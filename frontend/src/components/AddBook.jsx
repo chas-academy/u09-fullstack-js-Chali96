@@ -20,7 +20,7 @@ const AddBook = () => {
         author,
         imageUrl,
     };
-axios.post('http://localhost:3000/book/add',data)
+axios.post('http://localhost:4001/book/add',data)
 .then((res) => {
     if(res.data.added)
     {

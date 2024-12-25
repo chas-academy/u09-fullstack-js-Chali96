@@ -1,5 +1,5 @@
 import express from 'express'
-import {Student} from '../models/Student.js'
+import {User} from '../models/User.js'
 import bcrypt from 'bcrypt'
 const router = express.Router()
 import { verifyAdmin } from './auth.js'
@@ -7,7 +7,7 @@ import { verifyAdmin } from './auth.js'
 router.post('/register',verifyAdmin,async(req,res)=>{
     try{
         const{roll,username,grade,password}=req.body;
-        const student= await Student.findOne({ $or: [{ username }, { roll }] })
+        const user = await User.findOne({ $or: [{ username }, { roll }] })
         if(student)
         {
            return res.json({alreadyRegistered:true,message:"student is registered"})

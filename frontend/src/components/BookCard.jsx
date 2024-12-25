@@ -1,23 +1,40 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import '../css/Book.css';
 
-const BookCard = ({book, role}) => {
-    const{name,author,imageUrl}=book
+
+const BookCard = ({ book, role, handleRemoveFromList, handleAddToList }) => {
+  const { name, author, imageUrl, _id } = book;
+
   return (
-    <div className='book-card'>
-        <img src={imageUrl}alt={name} className='book-image'/>
-        <div className='book-details'>
-            <h3>{name}</h3>
-            <p>{author}</p>
-        </div>
-        {role==='admin' && <div className=' book-actions'>
-            <button className='edit-btn'><Link to={`/edit/${book._id}`}className='editlink-btn'>edit</Link></button>
-            <button className='delete-btn'><Link to={`/delete/${book._id}`}className='deletelink-btn'>delete</Link></button>
-            
-        </div> }
-        
-    </div>
-  )
-}
+    <div className="book-card">
+      <img src={imageUrl || '/default-image.jpg'} alt={name} className="book-image" />
+      <div className="book-details">
+        <h3>{name}</h3>
+        <p>{author}</p>
+      </div>
 
-export default BookCard
+      {/* Om användaren är admin, visa knappar för CRUD på böcker */}
+      {role === 'admin' && (
+        <div className="book-actions">
+          <button className="edit-btn">
+            <Link to={`/edit/${_id}`} className="editlink-btn">Edit</Link>
+          </button>
+          <button className="delete-btn">
+            <Link to={`/delete/${_id}`} className="deletelink-btn">Delete</Link>
+          </button>
+        </div>
+      )}
+
+      {/* För alla användare, visa knapp för att lägga till boken till deras läslista */}
+      {role === 'user' && (
+        <div className="book-actions">
+          <button onClick={() => handleAddToList(_id)}>Add to My List</button>
+          <button onClick={() => handleRemoveFromList(_id)}>Remove from My List</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default BookCard;

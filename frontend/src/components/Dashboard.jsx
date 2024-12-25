@@ -1,38 +1,40 @@
-import React, { useEffect, useState } from 'react'
-import '../css/Dashboard.css'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Dashboard = () => {
-  const [students, setStudents] = useState(0)
-  const [admin, setAdmin] = useState(0)
-  const [books, setBooks] = useState(0)
+  const [userBooks, setUserBooks] = useState([]);
 
-  useEffect(() => {
-    axios.get('http://localhost:3000/dashboard')
-    .then(res => {
-      if(res.data.ok) {
-        setStudents(res.data.student)
-        setAdmin(res.data.admin)
-        setBooks(res.data.book)
-      }
-    }).catch(err => console.log(err))
-  } , [])
+  const token = localStorage.getItem('token'); // Hämta token från localStorage
+
+  axios.get('http://localhost:4001/user-books', {
+    headers: {
+      Authorization: `Bearer ${token}`  // Skicka med token i headers
+    }
+  })
+  .then((res) => {
+    setUserBooks(res.data.books);
+  })
+  .catch((err) => {
+    console.error('Error fetching user books:', err);
+  });
+
   return (
     <div className="dashboard">
-      <div className="dashboard-box">
-        <h2>Total Books</h2> <br />
-        <h2>{books}</h2>
-      </div>
-      <div className="dashboard-box">
-        <h2>Total Students</h2> <br />
-        <h2>{students}</h2>
-      </div>
-      <div className="dashboard-box">
-        <h2>Total Admins</h2> <br />
-        <h2>{admin}</h2>
-      </div>
+      <h2>Your Books</h2>
+      <ul>
+        {userBooks.length > 0 ? (
+          userBooks.map((book) => (
+            <li key={book._id}>
+              <h3>{book.name}</h3>
+              <p>{book.author}</p>
+            </li>
+          ))
+        ) : (
+          <p>No books available</p>
+        )}
+      </ul>
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;
