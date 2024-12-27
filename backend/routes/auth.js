@@ -6,36 +6,66 @@ import { Admin } from '../models/Admin.js';
 
 const router = express.Router();
 
-router.post('/register-admin', async (req, res) => {
-    const { email, password } = req.body;
-  
+router.post('/register', async (req, res) => {
+    const { email, username, password } = req.body;
+
     try {
-      // Kontrollera om admin redan finns
-      const existingAdmin = await Admin.findOne({ email });
-      if (existingAdmin) {
-        return res.status(400).json({ message: 'Admin already exists' });
-      }
-  
-      // Hasha lösenordet
-      const hashedPassword = await bcrypt.hash(password, 10);
-  
-      // Skapa en ny admin
-      const newAdmin = new Admin({
-        email,
-        password: hashedPassword,
-      });
-  
-      await newAdmin.save();
-  
-      // Skapa JWT-token för den nya adminen
-      const token = jwt.sign({ id: newAdmin._id, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
-  
-      res.status(201).json({ message: 'Admin created successfully', token });
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = new User({
+            email,
+            username,
+            password: hashedPassword,
+        });
+
+        await newUser.save();
+
+        const token = jwt.sign({ id: newUser._id, role: 'user' }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+        res.status(201).json({ success: true, message: 'User registered successfully', token });
     } catch (err) {
-      console.error("Error in creating admin: ", err);  // Lägg till detta för att få mer detaljer i loggen
-      res.status(500).json({ message: 'Server error', error: err.message });
+        console.error('Error during registration:', err); 
+        res.status(500).json({ message: 'Server error', error: err.message });
     }
-  });
+});
+
+
+
+// router.post('/register-admin', async (req, res) => {
+//     const { email, password } = req.body;
+  
+//     try {
+//       // Kontrollera om admin redan finns
+//       const existingAdmin = await Admin.findOne({ email });
+//       if (existingAdmin) {
+//         return res.status(400).json({ message: 'Admin already exists' });
+//       }
+  
+//       // Hasha lösenordet
+//       const hashedPassword = await bcrypt.hash(password, 10);
+  
+//       // Skapa en ny admin
+//       const newAdmin = new Admin({
+//         email,
+//         password: hashedPassword,
+//       });
+  
+//       await newAdmin.save();
+  
+//       // Skapa JWT-token för den nya adminen
+//       const token = jwt.sign({ id: newAdmin._id, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  
+//       res.status(201).json({ message: 'Admin created successfully', token });
+//     } catch (err) {
+//       console.error("Error in creating admin: ", err);  // Lägg till detta för att få mer detaljer i loggen
+//       res.status(500).json({ message: 'Server error', error: err.message });
+//     }
+//   });
   
 
 // Login- user rutt
