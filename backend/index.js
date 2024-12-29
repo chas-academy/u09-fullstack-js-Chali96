@@ -6,14 +6,12 @@ import "./db.js";
 import { adminRouter } from './routes/admin.js';
 import { userBooksRouter } from './routes/userBooks.js';
 import { bookRouter } from './routes/book.js';
-import { AdminRouter } from './routes/auth.js';  // Se till att du importerat rätt router
+import { AuthRouter } from './routes/auth.js';  
+import { adminBooksRouter } from './routes/adminBooks.js';
 
 import { Book } from './models/Book.js'
 import { User } from './models/User.js'
 import { Admin } from './models/Admin.js'
-
-
-
 
 const app = express()
 app.use(express.json())
@@ -24,10 +22,11 @@ app.use(cors({
 app.use(cookieParser())
 dotenv.config()
 
-app.use('/admin', adminRouter); // Admin-rutter
+app.use('/admin', adminRouter); // Admin-rutter för inloggning och utloggning/register
 app.use('/user-books', userBooksRouter); // Användarens böcker
 app.use('/book', bookRouter); // Böcker (CRUD på böcker)
-app.use('/auth', AdminRouter); // Se till att användningen av '/auth' är korrekt
+app.use('/auth', AuthRouter);  // autentisering
+app.use('/admin', adminBooksRouter); // admin rutter för crud på böcker
 
 
 app.get('/dashboard', async (req, res) => {
@@ -41,10 +40,6 @@ app.get('/dashboard', async (req, res) => {
     }
     
 })
-
-app.get("/", (req, res) => {
-    res.send("Backend is running!");
-});
 
 
 app.listen(process.env.PORT, () => {

@@ -1,40 +1,31 @@
 import jwt from 'jsonwebtoken';
 
-export const verifyUser = (req, res, next) => {
-  const token = req.cookies.token || req.headers['authorization']; // Hämta token från cookies eller headers
 
+export const verifyUser = (req, res, next) => {
+  const authHeader = req.headers['authorization']; // Förväntar sig "Bearer <token>"
+  if (!authHeader) {
+      return res.status(403).json({ message: 'No token provided' });
+  }
+
+  const token = authHeader.split(' ')[1];
   if (!token) {
-    return res.status(403).json({ message: 'No token provided' });
+      return res.status(403).json({ message: 'No token found' });
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(403).json({ message: 'Invalid token' });
-    }
+      if (err) {
+          console.error('Token verification failed:', err);
+          return res.status(403).json({ message: 'Invalid token' });
+      }
 
-    req.user = decoded; // Sätt användarens info (t.ex., userId) i request
-    next(); // Gå vidare till nästa middleware eller rutt
+      console.log('Decoded token:', decoded); // För debugging
+
+      // Tillåt både 'user' och 'admin'
+      if (decoded.role !== 'user' && decoded.role !== 'admin') {
+          return res.status(403).json({ message: 'Invalid token - not user or admin' });
+      }
+
+      req.user = decoded; // ex: { id: "...", role: "admin", iat: 123, exp: 456 }
+      next();
   });
 };
-
-// Verify Admin middleware
-export const verifyAdmin = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1];  // Hämta token från headers
-  
-    if (!token) {
-      return res.status(403).json({ message: 'No token provided' });
-    }
-  
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        return res.status(403).json({ message: 'Invalid token' });
-      }
-  
-      if (decoded.role !== 'admin') {
-        return res.status(403).json({ message: 'Not authorized as admin' });
-      }
-  
-      req.user = decoded;  // Sätt användarens info i request
-      next();  // Gå vidare till nästa middleware eller rutt
-    });
-  };
