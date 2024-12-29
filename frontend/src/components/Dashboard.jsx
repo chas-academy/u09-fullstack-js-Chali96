@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../css/dashboard.css'; // Ny eller uppdaterad CSS-fil
+import '../css/Dashboard.css'; // Ny eller uppdaterad CSS-fil
 
 const Dashboard = () => {
   const [userBooks, setUserBooks] = useState([]);
