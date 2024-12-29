@@ -1,25 +1,26 @@
 import express from 'express';
 import { Book } from '../models/Book.js';
 import { verifyUser } from '../middleware/verifyUser.js'; // Importera autentisering-middleware
+import { verifyAdmin } from '../middleware/verifyAdmin.js'
+import axios from 'axios';
 
 
 const router = express.Router();
 
-// Skapa en bok (alla användare)
-router.post('/add', verifyUser, async (req, res) => {
+// Skapa en bok (endast admin)
+router.post('/add', verifyAdmin, async (req, res) => {
   try {
-    const { name, author, imageUrl } = req.body;
+      const { name, author, imageUrl } = req.body;
 
-    const newBook = new Book({ name, author, imageUrl });
+      const newBook = new Book({ name, author, imageUrl });
 
-    await newBook.save();
-    return res.json({ added: true, book: newBook });
+      await newBook.save();
+      return res.json({ added: true, book: newBook });
   } catch (err) {
-    console.error(err);
-    return res.json({ message: 'Error adding book' });
+      console.error(err);
+      return res.status(500).json({ message: 'Error adding book' });
   }
 });
-
 // Hämta alla böcker (alla användare)
 router.get('/books', async (req, res) => {
   try {
@@ -32,7 +33,7 @@ router.get('/books', async (req, res) => {
 });
 
 // Uppdatera bok (alla användare)
-router.put('/edit/:id', verifyUser, async (req, res) => {
+router.put('/edit/:id', verifyAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     const updatedBook = await Book.findByIdAndUpdate(id, req.body, { new: true });
@@ -40,6 +41,20 @@ router.put('/edit/:id', verifyUser, async (req, res) => {
   } catch (err) {
     console.error(err);
     return res.json({ message: 'Error updating book' });
+  }
+});
+
+router.delete('/delete/:id', verifyAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedBook = await Book.findByIdAndDelete(id);
+    if (!deletedBook) {
+      return res.json({ message: 'Book not found' });
+    }
+    return res.json({ deleted: true });
+  } catch (err) {
+    console.error(err);
+    return res.json({ message: 'Error deleting book' });
   }
 });
 

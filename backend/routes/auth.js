@@ -1,11 +1,12 @@
+// routes/auth.js
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { User } from '../models/User.js';
-import { Admin } from '../models/Admin.js';
 
 const router = express.Router();
 
+// Registrera vanlig användare
 router.post('/register', async (req, res) => {
     const { email, username, password } = req.body;
 
@@ -21,11 +22,16 @@ router.post('/register', async (req, res) => {
             email,
             username,
             password: hashedPassword,
+            role: 'user', // Explicit sätta rollen till 'user'
         });
 
         await newUser.save();
 
-        const token = jwt.sign({ id: newUser._id, role: 'user' }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign(
+            { id: newUser._id, role: newUser.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
 
         res.status(201).json({ success: true, message: 'User registered successfully', token });
     } catch (err) {
@@ -34,41 +40,41 @@ router.post('/register', async (req, res) => {
     }
 });
 
+// Registrera admin
+router.post('/register-admin', async (req, res) => {
+    const { email, username, password } = req.body;
 
+    try {
+        const existingAdmin = await User.findOne({ email });
+        if (existingAdmin) {
+            return res.status(400).json({ message: 'Admin already exists' });
+        }
 
-// router.post('/register-admin', async (req, res) => {
-//     const { email, password } = req.body;
-  
-//     try {
-//       // Kontrollera om admin redan finns
-//       const existingAdmin = await Admin.findOne({ email });
-//       if (existingAdmin) {
-//         return res.status(400).json({ message: 'Admin already exists' });
-//       }
-  
-//       // Hasha lösenordet
-//       const hashedPassword = await bcrypt.hash(password, 10);
-  
-//       // Skapa en ny admin
-//       const newAdmin = new Admin({
-//         email,
-//         password: hashedPassword,
-//       });
-  
-//       await newAdmin.save();
-  
-//       // Skapa JWT-token för den nya adminen
-//       const token = jwt.sign({ id: newAdmin._id, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
-  
-//       res.status(201).json({ message: 'Admin created successfully', token });
-//     } catch (err) {
-//       console.error("Error in creating admin: ", err);  // Lägg till detta för att få mer detaljer i loggen
-//       res.status(500).json({ message: 'Server error', error: err.message });
-//     }
-//   });
-  
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-// Login- user rutt
+        const newAdmin = new User({
+            email,
+            username,
+            password: hashedPassword,
+            role: 'admin', // Specificera rollen som 'admin'
+        });
+
+        await newAdmin.save();
+
+        const token = jwt.sign(
+            { id: newAdmin._id, role: newAdmin.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
+        res.status(201).json({ message: 'Admin created successfully', token });
+    } catch (err) {
+        console.error("Error in creating admin: ", err); 
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+// Login-rutt för användare
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -85,7 +91,11 @@ router.post('/login', async (req, res) => {
         }
 
         // Skapa JWT-token
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign(
+            { id: user._id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
 
         res.json({ token, role: user.role });
     } catch (err) {
@@ -94,31 +104,37 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// Login-rutt för admin
 router.post('/admin-login', async (req, res) => {
+    console.log('Admin login attempted'); // För debugging
     const { email, password } = req.body;
 
     try {
-        const user = await Admin.findOne({ email });
+        const admin = await User.findOne({ email, role: 'admin' });
 
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+        if (!admin) {
+            return res.status(404).json({ message: 'Admin not found' });
         }
 
-        const validPassword = await bcrypt.compare(password, user.password);
+        const validPassword = await bcrypt.compare(password, admin.password);
         if (!validPassword) {
+            console.log('Invalid password');
             return res.status(400).json({ message: 'Invalid password' });
         }
 
         // Skapa JWT-token
-        const token = jwt.sign({ id: Admin._id, role: Admin.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign(
+            { id: admin._id, role: admin.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
 
-        res.json({ token, role: Admin.role });
+        res.json({ token, role: admin.role });
     } catch (err) {
-        console.error(err);
+        console.error('Error during admin login:', err);
         res.status(500).json({ message: 'Server error' });
     }
 });
-
 
 // Verifiera användare
 router.get('/verify', (req, res) => {
@@ -137,4 +153,4 @@ router.get('/verify', (req, res) => {
     });
 });
 
-export { router as AdminRouter };
+export { router as AuthRouter };
