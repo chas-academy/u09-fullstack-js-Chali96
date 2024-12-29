@@ -1,7 +1,7 @@
 // src/components/AdminDashboard.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import "../css/AdminDashboard.css"; // Anpassa denna CSS-fil efter behov
+import "../css/adminDashboard.css"; // Anpassa denna CSS-fil efter behov
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
