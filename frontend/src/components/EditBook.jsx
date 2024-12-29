@@ -11,45 +11,31 @@ const EditBook = () => {
   const navigate= useNavigate()
   const{id} = useParams()
 
-  useEffect(()=>{
-    axios.get('http://localhost:4001/book/edit/'+id)
-.then((res) => {
-  setName(res.data.name)
-  setAuthor(res.data.author)
-  setImageUrl(res.data.imageUrl)
+  useEffect(() => {
+    axios.get(`http://localhost:4002/book/edit/${id}`)
+      .then(res => {
+        setName(res.data.name);
+        setAuthor(res.data.author);
+        setImageUrl(res.data.imageUrl);
+      })
+      .catch(err => console.log(err));
+  }, [id]);
   
-})
-.catch((error) => {
-  console.log(error);
-});
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+    axios.put(`http://localhost:4002/book/edit/${id}`, 
+      { name, author, imageUrl }, 
+      { headers: { Authorization: `Bearer ${token}` } }
+    )
+    .then(res => {
+      if (res.data.updated) {
+        navigate('/books');
+      }
+    })
+    .catch(err => console.log(err));
+  };
 
-  },[])
-
-
-  const  handleSubmit =(e)=>{
-    e.preventDefault()
-    const data = {
-        name,
-        author,
-        imageUrl,
-    };
-axios.put('http://localhost:4001/book/edit/'+id,data)
-.then((res) => {
-    if(res.data.updated)
-    {
-  navigate('/books')
-    }
-    else{
-        console.log(res )
-    }
-  
- 
-  
-})
-.catch((error) => {
-  console.log(error);
-});
-}
   return (
     <div className='student-form-container'>
         <form className='student-form' onSubmit={handleSubmit}>

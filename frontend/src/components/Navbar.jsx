@@ -34,11 +34,14 @@ const Navbar = () => {
         {role === 'admin' && (
           <>
             <Link to="/addbook" className='navbar-link'>Add Book</Link>
-            <Link to="/dashboard" className='navbar-link'>Dashboard</Link>
+            <Link to="/admin-dashboard" className='navbar-link'>Dashboard</Link>
+
           </>
         )}
+
+        
         {role !== '' && (
-          <Link to="/dashboard" className='navbar-link'>Dashboard</Link>
+          <Link to="/dashboard" className='navbar-link'>My Reading List</Link>
         )}
           {role !== '' && (
           <Link to="/books" className='navbar-link'>Books</Link>

@@ -6,7 +6,7 @@ const Books = ({ role }) => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:4001/book/books')
+    axios.get('http://localhost:4002/book/books')
       .then((res) => {
         setBooks(res.data);
       })
@@ -14,35 +14,36 @@ const Books = ({ role }) => {
         console.error('Error fetching books:', err);
       });
   }, []);
-
   const handleAddToList = (bookId) => {
     const token = localStorage.getItem('token');
-    axios.post('http://localhost:4001/user-books/add-to-list', { bookId }, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    .then((res) => {
+    console.log('handleAddToList token =', token); // <-- logga
+
+    axios.post('http://localhost:4002/user-books/add-to-list',
+      { bookId },
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    )
+    .then(res => {
       if (res.data.added) {
         alert('Book added to your list!');
       }
     })
-    .catch((err) => {
-      console.error('Error adding book to list:', err);
-    });
+    .catch(err => console.error('Error adding book to list:', err));
   };
+  
 
   const handleRemoveFromList = (bookId) => {
     const token = localStorage.getItem('token');
-    axios.delete(`http://localhost:4001/user-books/remove-from-list/${bookId}`, {
-      headers: { Authorization: `Bearer ${token}` }
+    axios.delete(`http://localhost:4002/user-books/remove-from-list/${bookId}`, {
+      headers: { Authorization: `Bearer ${token}` },
     })
-    .then((res) => {
-      if (res.data.removed) {
-        alert('Book removed from your list!');
-      }
-    })
-    .catch((err) => {
-      console.error('Error removing book from list:', err);
-    });
+      .then(res => {
+        if (res.data.removed) {
+          alert('Book removed from your list!');
+        }
+      })
+      .catch(err => console.error('Error removing book from list:', err));
   };
 
   return (
@@ -50,10 +51,10 @@ const Books = ({ role }) => {
       <div className="book-list">
         {books.length > 0 ? (
           books.map((book) => (
-            <BookCard 
-              key={book._id} 
-              book={book} 
-              role={role} 
+            <BookCard
+              key={book._id}
+              book={book}
+              role={role}
               handleAddToList={handleAddToList}
               handleRemoveFromList={handleRemoveFromList}
             />
@@ -67,3 +68,4 @@ const Books = ({ role }) => {
 };
 
 export default Books;
+

@@ -6,17 +6,20 @@ import{useNavigate, useParams} from 'react-router-dom'
 const DeleteBook = () => {
     const navigate= useNavigate()
     const{id} = useParams()
-    useEffect(()=>{
-        axios.delete('http://localhost:4001/book/delete/'+id)
-        .then(res=>{
-            if(res.data.deleted){
-                navigate('/books')
-    
-            }
-        }).catch((err)=>{
-            console.log(err)
-        })
-      },[])
+
+  useEffect(() => {
+  const token = localStorage.getItem('token');
+  axios.delete(`http://localhost:4002/book/delete/${id}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+  .then(res => {
+    if (res.data.deleted) {
+      navigate('/books');
+    }
+  })
+  .catch(err => console.log(err));
+}, [id]);
+
 }
 
 export default DeleteBook

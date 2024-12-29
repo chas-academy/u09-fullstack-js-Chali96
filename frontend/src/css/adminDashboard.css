@@ -1,0 +1,93 @@
+/* adminDashboard.css */
+
+.admin-dashboard {
+    padding: 20px;
+    background-image: linear-gradient(to bottom right, #000000, #e44b97);
+}
+
+.admin-dashboard h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #ffffff;
+}
+
+section {
+    margin-bottom: 40px;
+    color: #000000;
+}
+
+.titel {
+    color: #ffffff;
+}
+
+.user-managment, h3{
+    margin-bottom: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin-bottom: 20px;
+    margin: auto;
+    background-color: #ffffff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: #000000 0px 20px 30px -10px;
+  width: 400px;
+}
+
+
+form input, form select, form button {
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: #ffffff;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+button {
+    padding: 6px 12px;
+    margin-right: 5px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #d32f2f;
+}
+
+img {
+    border-radius: 4px;
+}

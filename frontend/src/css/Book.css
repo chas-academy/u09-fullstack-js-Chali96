@@ -12,7 +12,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
         background-image: linear-gradient(to bottom right, #000000, #2d2a25, #995525, #44250d);
     }
 .book-card {

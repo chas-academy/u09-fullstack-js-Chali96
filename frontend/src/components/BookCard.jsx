@@ -27,12 +27,13 @@ const BookCard = ({ book, role, handleRemoveFromList, handleAddToList }) => {
       )}
 
       {/* För alla användare, visa knapp för att lägga till boken till deras läslista */}
-      {role === 'user' && (
+      {role !== '' && (
         <div className="book-actions">
           <button onClick={() => handleAddToList(_id)}>Add to My List</button>
-          <button onClick={() => handleRemoveFromList(_id)}>Remove from My List</button>
         </div>
       )}
+      
+
     </div>
   );
 };

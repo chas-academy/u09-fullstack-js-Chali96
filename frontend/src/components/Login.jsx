@@ -14,11 +14,12 @@ const Login = () => {
     const data = { email, password };
 
     try {
-      const response = await axios.post('http://localhost:4001/auth/login', data, { withCredentials: true });
+      const response = await axios.post('http://localhost:4002/auth/login', data, { withCredentials: true });
 
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);  // Spara token
         localStorage.setItem('role', response.data.role);  // Spara användarens roll
+        console.log('Got token => ', response.data.token);
 
         // Navigera till Dashboard om inloggningen lyckas
         navigate('/dashboard');
@@ -28,27 +29,6 @@ const Login = () => {
       alert('Login failed, please check your credentials.');
     }
   };
-
-  // Inloggning för Admin (om du använder en egen login-komponent för admin)
-const handleAdminLogin = async (e) => {
-  e.preventDefault();
-  const data = { email, password };
-
-  try {
-    const response = await axios.post('http://localhost:4001/auth/admin-login', data);
-
-    if (response.data.token) {
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('role', response.data.role);
-
-      // Navigera till admin-dashbordet eller en annan admin-specifik sida
-      navigate('/admin-dashboard');
-    }
-  } catch (error) {
-    console.error('Login error:', error);
-    alert('Admin login failed');
-  }
-};
 
   return (
     <div className="login_page">
@@ -65,7 +45,7 @@ const handleAdminLogin = async (e) => {
         <button className="btn-login" onClick={handleSubmit}>Login</button>
 
         <div className="form-group">
-          <Link to="/admin-login">Login as Admin</Link>
+          <Link className="admin-login-link" to="/admin-login">Login as Admin</Link>
         </div>
       </div>
       </div>
