@@ -7,10 +7,10 @@
 }
   
   .register-container {
-    width: 400px;
-    padding: 30px;
+    width: 450px;
+    padding: 40px;
     background-color: #ffffff;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: #000000 0px 20px 30px -10px;
   }
   

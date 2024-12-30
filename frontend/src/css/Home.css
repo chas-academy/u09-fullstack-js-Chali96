@@ -138,9 +138,9 @@
   
   /* Section: Inspirational Quote */
   .inspirational-quote {
-    background-color: #2d2a25;
+    background-color: #fff;
     color: #fff;
-    padding: 40px;
+    padding: 50px;
     text-align: center;
   }
   
@@ -148,6 +148,7 @@
     font-size: 1.5rem;
     font-style: italic;
     margin-bottom: 10px;
+    color: #000;
   }
   
   .inspirational-quote cite {

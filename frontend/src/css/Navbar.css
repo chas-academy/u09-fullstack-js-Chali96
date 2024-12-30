@@ -57,3 +57,54 @@ background-color: black;
 
   
 }
+
+/* För mobila enheter */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-inline: 20px;
+  }
+
+  .navbar-right {
+    display: none; /* Dölj länkarna som standard */
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .navbar-right.active {
+    display: flex; /* Visa länkar när menyn är aktiv */
+  }
+
+  .burger {
+    display: block;
+    font-size: 1.8rem;
+    color: #fff;
+    cursor: pointer;
+    margin-left: auto;
+    margin-bottom: -5px;
+  }
+
+  .burger span {
+    display: block;
+    height: 3px;
+    width: 30px;
+    background: #fff;
+    margin: 5px 0;
+    border-radius: 2px;
+  }
+
+  .navbar-link {
+    margin-left: 0;
+    padding: 10px 0;
+    border-bottom: 1px solid #ffc249;
+    width: 100%;
+    text-align: left;
+  }
+
+  .navbar-link:hover {
+    text-shadow: 0 0 15px #ffc249;
+  }
+}
+
+

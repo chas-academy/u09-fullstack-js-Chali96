@@ -29,7 +29,7 @@ const BookCard = ({ book, role, handleRemoveFromList, handleAddToList }) => {
       {/* För alla användare, visa knapp för att lägga till boken till deras läslista */}
       {role !== '' && (
         <div className="book-actions">
-          <button onClick={() => handleAddToList(_id)}>Add to My List</button>
+          <button className='addtolist-btn' onClick={() => handleAddToList(_id)}>Add to My List</button>
         </div>
       )}
       
