@@ -1,9 +1,13 @@
+// src/components/Books.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import BookCard from './BookCard';
+import '../css/Book.css'; // Korrigera importen till Books.css
 
 const Books = ({ role }) => {
   const [books, setBooks] = useState([]);
+  const [searchInput, setSearchInput] = useState(''); // För inmatning
+  const [searchQuery, setSearchQuery] = useState(''); // För filtrering
 
   useEffect(() => {
     axios.get('http://localhost:4002/book/books')
@@ -14,6 +18,7 @@ const Books = ({ role }) => {
         console.error('Error fetching books:', err);
       });
   }, []);
+
   const handleAddToList = (bookId) => {
     const token = localStorage.getItem('token');
     console.log('handleAddToList token =', token); // <-- logga
@@ -31,7 +36,6 @@ const Books = ({ role }) => {
     })
     .catch(err => console.error('Error adding book to list:', err));
   };
-  
 
   const handleRemoveFromList = (bookId) => {
     const token = localStorage.getItem('token');
@@ -46,11 +50,37 @@ const Books = ({ role }) => {
       .catch(err => console.error('Error removing book from list:', err));
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchQuery(searchInput.trim());
+  };
+
+  // Filtrera böcker baserat på sökfrågan
+  const filteredBooks = books.filter(book =>
+    book.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    book.author.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="books_page">
+      <h1>Books</h1>
+      
+      {/* Sökformulär */}
+      <form onSubmit={handleSearch} className="search-form">
+        <input
+          type="text"
+          placeholder="Sök böcker eller författare..."
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          className="search-input"
+        />
+        <button type="submit" className="search-button">SEARCH</button>
+      </form>
+
+      {/* Visa alla böcker eller filtrerade böcker */}
       <div className="book-list">
-        {books.length > 0 ? (
-          books.map((book) => (
+        {filteredBooks.length > 0 ? (
+          filteredBooks.map((book) => (
             <BookCard
               key={book._id}
               book={book}
@@ -60,7 +90,7 @@ const Books = ({ role }) => {
             />
           ))
         ) : (
-          <p>No books available</p>
+          <p>Inga böcker hittades.</p>
         )}
       </div>
     </div>

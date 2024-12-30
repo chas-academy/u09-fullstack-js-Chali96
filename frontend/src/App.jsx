@@ -12,7 +12,10 @@ import AddBook from './components/AddBook';
 import EditBook from './components/EditBook';
 import DeleteBook from './components/DeleteBook';
 import Logout from './components/Logout';
-import AdminDashboard from './components/AdminDashboard'; // Importera AdminDashboard
+import AdminDashboard from './components/AdminDashboard'; 
+import About from './components/About';
+import Contact from './components/Contact';
+import Privacy from './components/Privacy';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
@@ -36,6 +39,7 @@ function App() {
     const token = localStorage.getItem('token');
     return !!token;
   };
+  
 
   return (
     <BrowserRouter>
@@ -58,6 +62,9 @@ function App() {
         <Route path='/admin-dashboard' element={
           isAdmin() ? <AdminDashboard /> : <Navigate to="/admin-dashboard" />
         } />
+          <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy" element={<Privacy />} />
       </Routes>
       <Footer role={role} />
     </BrowserRouter>
