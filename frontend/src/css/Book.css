@@ -98,6 +98,12 @@ h1 {
     width: 200px;
     color: #333;
 }
+@media (max-width: 480px) {
+.book-card{
+    width: 180px;
+
+}
+  }
 
 .book-card:hover {
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
