@@ -46,7 +46,7 @@ Follow these instructions to set up the project locally on your machine.
 1. **Clone the Repository**
 
    ```
-   git clone https://github.com/yourusername/bookverse.git
+   git clone https://github.com/chas-academy/u09-fullstack-js-Chali96.git
    cd bookverse 
 2. **Navigate to the Frontend Directory**
    ```
