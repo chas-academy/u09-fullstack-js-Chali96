@@ -12,6 +12,7 @@ const Books = ({ role }) => {
   useEffect(() => {
     axios.get('https://u09-fullstack-js-chali96.onrender.com/book/books')
       .then((res) => {
+        console.log("books =>", res.data); // <-- Viktigt, se vad som faktiskt kommer
         setBooks(res.data);
       })
       .catch((err) => {
