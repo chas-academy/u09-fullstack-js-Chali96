@@ -12,7 +12,7 @@ const Login = ({ setRole }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:4002/auth/login", {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, {
         email,
         password
       }, { withCredentials: true });

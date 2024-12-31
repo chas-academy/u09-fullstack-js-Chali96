@@ -12,7 +12,7 @@ const Register = () => {
     axios.defaults.withCredentials = true;
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:4002/auth/register", { username, email, password })
+        axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, { username, email, password })
         .then(result => {
             console.log(result);
             navigate("/login");

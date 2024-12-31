@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Hämta användarens böcker vid mount
-    axios.get('http://localhost:4002/user-books', {
+    axios.get(`${process.env.REACT_APP_API_URL}/user-books`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -25,7 +25,7 @@ const Dashboard = () => {
 
   // Ta bort bok från listan
   const handleRemoveFromList = (bookId) => {
-    axios.delete(`http://localhost:4002/user-books/remove-from-list/${bookId}`, {
+    axios.delete(`${process.env.REACT_APP_API_URL}/user-books/remove-from-list/${bookId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {

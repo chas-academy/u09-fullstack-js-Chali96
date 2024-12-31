@@ -12,7 +12,7 @@ const EditBook = () => {
   const{id} = useParams()
 
   useEffect(() => {
-    axios.get(`http://localhost:4002/book/edit/${id}`)
+    axios.get(`${process.env.REACT_APP_API_URL}/book/edit/${id}`)
       .then(res => {
         setName(res.data.name);
         setAuthor(res.data.author);
@@ -24,7 +24,7 @@ const EditBook = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
-    axios.put(`http://localhost:4002/book/edit/${id}`, 
+    axios.put(`${process.env.REACT_APP_API_URL}/book/edit/${id}`, 
       { name, author, imageUrl }, 
       { headers: { Authorization: `Bearer ${token}` } }
     )

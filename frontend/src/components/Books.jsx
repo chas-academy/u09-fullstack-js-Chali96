@@ -10,7 +10,7 @@ const Books = ({ role }) => {
   const [searchQuery, setSearchQuery] = useState(''); // För filtrering
 
   useEffect(() => {
-    axios.get('http://localhost:4002/book/books')
+    axios.get(`${process.env.REACT_APP_API_URL}/book/books`)
       .then((res) => {
         setBooks(res.data);
       })
@@ -23,7 +23,7 @@ const Books = ({ role }) => {
     const token = localStorage.getItem('token');
     console.log('handleAddToList token =', token); // <-- logga
 
-    axios.post('http://localhost:4002/user-books/add-to-list',
+    axios.post(`${process.env.REACT_APP_API_URL}/user-books/add-to-list`,
       { bookId },
       {
         headers: { Authorization: `Bearer ${token}` }
@@ -39,7 +39,7 @@ const Books = ({ role }) => {
 
   const handleRemoveFromList = (bookId) => {
     const token = localStorage.getItem('token');
-    axios.delete(`http://localhost:4002/user-books/remove-from-list/${bookId}`, {
+    axios.delete(`${process.env.REACT_APP_API_URL}/user-books/remove-from-list/${bookId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(res => {
