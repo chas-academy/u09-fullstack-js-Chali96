@@ -12,7 +12,7 @@ const Register = () => {
     axios.defaults.withCredentials = true;
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, { username, email, password })
+        axios.post('https://u09-fullstack-js-chali96.onrender.com/auth/register', { username, email, password })
         .then(result => {
             console.log(result);
             navigate("/login");

@@ -22,7 +22,7 @@ const AddBook = () => {
         const token = localStorage.getItem('token');
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}/book/add`, data, {
+            const response = await axios.post('https://u09-fullstack-js-chali96.onrender.com/book/add', data, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Hämta användarens böcker vid mount
-    axios.get(`${process.env.REACT_APP_API_URL}/user-books`, {
+    axios.get('https://u09-fullstack-js-chali96.onrender.com/user-books', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -25,7 +25,7 @@ const Dashboard = () => {
 
   // Ta bort bok från listan
   const handleRemoveFromList = (bookId) => {
-    axios.delete(`${process.env.REACT_APP_API_URL}/user-books/remove-from-list/${bookId}`, {
+    axios.delete(`https://u09-fullstack-js-chali96.onrender.com/user-books/remove-from-list/${bookId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {

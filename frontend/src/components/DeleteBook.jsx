@@ -9,7 +9,7 @@ const DeleteBook = () => {
 
   useEffect(() => {
   const token = localStorage.getItem('token');
-  axios.delete(`${process.env.REACT_APP_API_URL}/book/delete/${id}`, {
+  axios.delete(`https://u09-fullstack-js-chali96.onrender.com/book/delete/${id}`, {
     headers: { Authorization: `Bearer ${token}` }
   })
   .then(res => {

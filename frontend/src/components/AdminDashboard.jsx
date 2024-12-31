@@ -18,7 +18,7 @@ const AdminDashboard = () => {
     // Hämta alla användare
     const fetchUsers = async () => {
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/admin/users`, {
+            const res = await axios.get('https://u09-fullstack-js-chali96.onrender.com/admin/users', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUsers(res.data.users);
@@ -32,7 +32,7 @@ const AdminDashboard = () => {
     const handleCreateUser = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/admin/users`, newUser, {
+            const res = await axios.post('https://u09-fullstack-js-chali96.onrender.com/admin/users', newUser, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUsers([...users, res.data.user]);
@@ -48,7 +48,7 @@ const AdminDashboard = () => {
     const handleDeleteUser = async (id) => {
         if (!window.confirm('Är du säker på att du vill ta bort denna användare?')) return;
         try {
-            await axios.delete(`${process.env.REACT_APP_API_URL}/admin/users/${id}`, {
+            await axios.delete(`https://u09-fullstack-js-chali96.onrender.com/admin/users/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUsers(users.filter(user => user._id !== id));
@@ -74,7 +74,7 @@ const AdminDashboard = () => {
     // Spara redigerad användare
     const handleSaveEdit = async (id) => {
         try {
-            const res = await axios.put(`${process.env.REACT_APP_API_URL}/admin/users/${id}`, editUserData, {
+            const res = await axios.put(`https://u09-fullstack-js-chali96.onrender.com/admin/users/${id}`, editUserData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUsers(users.map(user => user._id === id ? res.data.user : user));
