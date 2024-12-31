@@ -16,7 +16,7 @@ import { Admin } from './models/Admin.js'
 const app = express()
 app.use(express.json())
 app.use(cors({
-    origin:["https://bookverse-u09.netlify.app/"],
+    origin:["https://bookverse-u09.netlify.app"],
     credentials:true
 }))
 app.use(cookieParser())
