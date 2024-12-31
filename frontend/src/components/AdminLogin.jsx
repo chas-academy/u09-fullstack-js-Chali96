@@ -1,12 +1,11 @@
-// AdminLogin.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/Login.css";
 
-const AdminLogin = ({ setRole }) => { // Få setRole via props
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const AdminLogin = ({ setRole }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -14,25 +13,27 @@ const AdminLogin = ({ setRole }) => { // Få setRole via props
     const data = { email, password };
 
     try {
-      const response = await axios.post('http://localhost:4002/auth/admin-login', data, { withCredentials: true });
-
+      const response = await axios.post("http://localhost:4002/auth/admin-login", data, { withCredentials: true });
       if (response.data.token) {
-        localStorage.setItem('token', response.data.token);  // Spara token
-        localStorage.setItem('role', response.data.role);    // Spara användarens roll
-        setRole(response.data.role);                         // Uppdatera state
-        navigate('/admin-dashboard');                         // Navigera till admin-dashboard
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("role", response.data.role);
+        // Uppdatera roll => Navbar uppdateras direkt
+        setRole(response.data.role);
+
+        navigate("/admin-dashboard");
       }
     } catch (error) {
-      console.error('Login error:', error);
-      alert('Login failed, please check your credentials.');
+      console.error("Login error:", error);
+      alert("Login failed, please check your credentials.");
     }
   };
 
+
   return (
     <div className="login_page">
-      <div className="login-container">
+      <div>
+        <form className="login-container" onSubmit={handleSubmit}>
         <h2 className="login-title">Admin Login</h2><br />
-        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input 

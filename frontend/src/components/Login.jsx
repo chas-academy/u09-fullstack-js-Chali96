@@ -21,11 +21,19 @@ const Login = () => {
         localStorage.setItem('role', response.data.role);  // Spara användarens roll
         console.log('Got token => ', response.data.token);
 
+        setRole(response.data.role);
+
+
         // Navigera till Dashboard om inloggningen lyckas
         navigate('/dashboard');
       }
     } catch (error) {
       console.error('Login error:', error);
+    
+      // Rensa localstorage om login misslyckas
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+    
       alert('Login failed, please check your credentials.');
     }
   };
@@ -47,7 +55,6 @@ const Login = () => {
         <div className="form-group">
           <Link className="admin-login-link" to="/admin-login">Login as Admin</Link>
         </div>
-
       </div>
       </div>
   );

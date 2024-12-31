@@ -69,7 +69,7 @@ const Books = ({ role }) => {
       <form onSubmit={handleSearch} className="search-form">
         <input
           type="text"
-          placeholder="Sök böcker eller författare..."
+          placeholder="Search for books or authors..."
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           className="search-input"

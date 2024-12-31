@@ -22,9 +22,9 @@ const Register = () => {
 
     return (
         <div className="register_page">
-            <div className="register-container">
+            <div>
+                <form className="register-container" onSubmit={handleSubmit}>
                 <h2 className="register-title">Register</h2><br />
-                <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="email">Email:</label>
                         <input 
