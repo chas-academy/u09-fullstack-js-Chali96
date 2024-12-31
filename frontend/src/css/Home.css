@@ -2,7 +2,6 @@
 
 /* General Reset */
 * {
-    cursor: url("Images/cursor img.png"), auto;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -61,7 +60,7 @@
   
   .hero-image {
     flex: 1;
-    background: url('Images/home page.png') center;
+    background: url('Images/home-page.png') center;
     background-size: 90%;
     background-repeat: no-repeat;
     filter: brightness(80%);
