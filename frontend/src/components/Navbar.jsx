@@ -1,23 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/Navbar.css";
 
-const Navbar = () => {
-  const [role, setRole] = useState(localStorage.getItem("role") || "");
+const Navbar = ({ role, setRole }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const storedRole = localStorage.getItem("role");
-    if (storedRole) {
-      setRole(storedRole);
-    }
-  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
-    setRole("");
-    setIsMenuOpen(false); // Stäng menyn vid logout
+    setRole("");          // Sätter rollen tom => re-render => Navbar visar "LOGIN" osv.
+    setIsMenuOpen(false); // Stäng menyn
   };
 
   const toggleMenu = () => {
@@ -50,6 +42,7 @@ const Navbar = () => {
             </Link>
           </>
         )}
+
         {role === "admin" && (
           <>
             <Link to="/addbook" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
@@ -60,8 +53,10 @@ const Navbar = () => {
             </Link>
           </>
         )}
+
         {role !== "" && (
           <>
+            {/* role === 'user' eller 'admin' => Kan visa READING LIST osv. */}
             <Link to="/dashboard" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
               READING LIST
             </Link>

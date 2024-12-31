@@ -1,62 +1,77 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
 import "../css/Login.css";
 
-const Login = () => {
+const Login = ({ setRole }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { email, password };
 
     try {
-      const response = await axios.post('http://localhost:4002/auth/login', data, { withCredentials: true });
+      const response = await axios.post("http://localhost:4002/auth/login", {
+        email,
+        password
+      }, { withCredentials: true });
 
       if (response.data.token) {
-        localStorage.setItem('token', response.data.token);  // Spara token
-        localStorage.setItem('role', response.data.role);  // Spara användarens roll
-        console.log('Got token => ', response.data.token);
+        // Spara token och roll i localStorage
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("role", response.data.role);
 
-        setRole(response.data.role);
+        // Uppdatera roll i React state om du skickar in setRole som prop
+        if (setRole) {
+          setRole(response.data.role);
+        }
 
-
-        // Navigera till Dashboard om inloggningen lyckas
-        navigate('/dashboard');
+        console.log("Got token =>", response.data.token);
+        navigate("/dashboard"); // Navigera till /dashboard (eller valfri sida)
       }
     } catch (error) {
-      console.error('Login error:', error);
-    
-      // Rensa localstorage om login misslyckas
-      localStorage.removeItem('token');
-      localStorage.removeItem('role');
-    
-      alert('Login failed, please check your credentials.');
+      console.error("Login error:", error);
+
+      // Rensa localStorage om du vill nollställa ev. gamla token/role
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+
+      alert("Login failed, please check your credentials.");
     }
   };
 
   return (
     <div className="login_page">
-      <div className="login-container">
+      <form className="login-container" onSubmit={handleSubmit}>
         <h2 className="login-title">Login</h2><br />
         <div className="form-group">
           <label htmlFor="email">Email:</label>
-          <input type="email" placeholder="Enter Email" onChange={(e) => setEmail(e.target.value)} />
+          <input
+            type="email"
+            placeholder="Enter Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input type="password" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <button className="btn-login" onClick={handleSubmit}>Login</button>
 
         <div className="form-group">
-          <Link className="admin-login-link" to="/admin-login">Login as Admin</Link>
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            placeholder="Enter Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
         </div>
-      </div>
-      </div>
+
+        <button className="btn-login" type="submit">
+          Login
+        </button>
+      </form>
+    </div>
   );
 };
 

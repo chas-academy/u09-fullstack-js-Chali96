@@ -77,66 +77,34 @@ router.post('/register-admin', async (req, res) => {
 // Login-rutt för användare
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
-
+  
     try {
-        // const user = await User.findOne({ email });
-        const user = await User.findOne({ email, role: 'user' });
-
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        const validPassword = await bcrypt.compare(password, user.password);
-        if (!validPassword) {
-            return res.status(400).json({ message: 'Invalid password' });
-        }
-
-        // Skapa JWT-token
-        const token = jwt.sign(
-            { id: user._id, role: user.role },
-            process.env.JWT_SECRET,
-            { expiresIn: '1h' }
-        );
-
-        res.json({ token, role: user.role });
+      // Leta upp användaren baserat på email - oavsett om den är user eller admin
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Jämför lösenord
+      const validPassword = await bcrypt.compare(password, user.password);
+      if (!validPassword) {
+        return res.status(400).json({ message: 'Invalid password' });
+      }
+  
+      // Skapa JWT-token som innehåller användarens roll
+      const token = jwt.sign(
+        { id: user._id, role: user.role },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+      );
+  
+      // Skicka tillbaka token och roll
+      return res.json({ token, role: user.role });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server error' });
+      console.error('Error in login route:', err);
+      return res.status(500).json({ message: 'Server error' });
     }
-});
-
-// Login-rutt för admin
-router.post('/admin-login', async (req, res) => {
-    console.log('Admin login attempted'); // För debugging
-    const { email, password } = req.body;
-
-    try {
-        const admin = await User.findOne({ email, role: 'admin' });
-
-        if (!admin) {
-            return res.status(404).json({ message: 'Admin not found' });
-        }
-
-        const validPassword = await bcrypt.compare(password, admin.password);
-        if (!validPassword) {
-            console.log('Invalid password');
-            return res.status(400).json({ message: 'Invalid password' });
-        }
-
-        // Skapa JWT-token
-        const token = jwt.sign(
-            { id: admin._id, role: admin.role },
-            process.env.JWT_SECRET,
-            { expiresIn: '1h' }
-        );
-
-        res.json({ token, role: admin.role });
-    } catch (err) {
-        console.error('Error during admin login:', err);
-        res.status(500).json({ message: 'Server error' });
-    }
-});
+  });
 
 // Verifiera användare
 router.get('/verify', (req, res) => {
