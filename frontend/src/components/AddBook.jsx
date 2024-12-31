@@ -21,6 +21,7 @@ const AddBook = () => {
         };
         const token = localStorage.getItem('token');
 
+        try {
             const response = await axios.post(`${process.env.REACT_APP_API_URL}/book/add`, data, {
                 headers: {
                     Authorization: `Bearer ${token}`
